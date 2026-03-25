@@ -2,16 +2,20 @@ package com.devteria.hello_spring_boot.Service.Products;
 
 import com.devteria.hello_spring_boot.Entity.Category;
 import com.devteria.hello_spring_boot.Entity.Products;
+import com.devteria.hello_spring_boot.Entity.image;
 import com.devteria.hello_spring_boot.Exceptions.ResoureeNotFoundException;
 import com.devteria.hello_spring_boot.Request.AddProductRequest;
 import com.devteria.hello_spring_boot.Request.UpdateProductRequest;
 import com.devteria.hello_spring_boot.Respository.categoryRepository;
+import com.devteria.hello_spring_boot.Respository.imageRepository;
 import com.devteria.hello_spring_boot.Respository.productRepository;
+import com.devteria.hello_spring_boot.dto.ImageDto;
 import com.devteria.hello_spring_boot.dto.ProductDto;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.awt.*;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,6 +24,8 @@ import java.util.Optional;
 public class productService implements IProductService {
     private final productRepository productRepository;
     private final categoryRepository  categoryRepository;
+    private final imageRepository imageRepository;
+
     private final ModelMapper modelMapper;
     @Override
     public Products getProductById(Long id) {
@@ -124,12 +130,22 @@ public class productService implements IProductService {
     public List<ProductDto> getConvertedProducts(List<Products> products) {
         return products.stream().map(this::convertToDto).toList();
     }
-
     @Override
     public ProductDto convertToDto(Products products) {
-        ProductDto productDto=modelMapper.map(products,ProductDto.class);
+        ProductDto productDto = modelMapper.map(products, ProductDto.class);
+
+        List<image> images = imageRepository.findByProductsId(products.getId());
+        List<ImageDto> imageDtos = images.stream()
+                .map(image -> {
+                    // ✅ Set downloadUrl giống như trong saveImages
+                    ImageDto imageDto = modelMapper.map(image, ImageDto.class);
+                    imageDto.setDownloadUrl("/api/v1/images/image/downloadUrl/" + image.getId());
+                    return imageDto;
+                })
+                .toList();
+
+        productDto.setImageDtos(imageDtos);
         return productDto;
     }
-
 
 }
