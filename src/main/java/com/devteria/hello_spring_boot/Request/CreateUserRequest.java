@@ -1,0 +1,12 @@
+package com.devteria.hello_spring_boot.Request;
+
+import lombok.Data;
+import org.hibernate.annotations.NaturalId;
+
+@Data
+public class CreateUserRequest {
+    private String firstName;
+    private String lastName;
+    private String email;
+    private String passWord;
+}
