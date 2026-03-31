@@ -1,7 +1,6 @@
-package com.devteria.hello_spring_boot.Security;
+package com.devteria.hello_spring_boot.Security.User;
 
 import com.devteria.hello_spring_boot.Entity.User;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

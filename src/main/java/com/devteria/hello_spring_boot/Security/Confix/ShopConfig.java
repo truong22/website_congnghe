@@ -1,4 +1,4 @@
-package com.devteria.hello_spring_boot.Confix;
+package com.devteria.hello_spring_boot.Security.Confix;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;

@@ -1,8 +1,7 @@
-package com.devteria.hello_spring_boot.Security;
+package com.devteria.hello_spring_boot.Security.User;
 
 import com.devteria.hello_spring_boot.Entity.User;
 import com.devteria.hello_spring_boot.Respository.UserRepository;
-import com.devteria.hello_spring_boot.Service.user.IUserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
