@@ -10,6 +10,7 @@ import com.devteria.hello_spring_boot.Service.Products.IProductService;
 import com.devteria.hello_spring_boot.dto.ProductDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -72,6 +73,7 @@ public class productController   {
             return ResponseEntity.status(INTERNAL_SERVER_ERROR).body(new ApiResponse(e.getMessage(),INTERNAL_SERVER_ERROR));
         }
     }
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("product/add")
     public ResponseEntity<ApiResponse> addProduct(@RequestBody AddProductRequest request){
         try{
@@ -82,7 +84,7 @@ public class productController   {
         catch (RuntimeException e){
             return ResponseEntity.status(INTERNAL_SERVER_ERROR).body(new ApiResponse(e.getMessage(),INTERNAL_SERVER_ERROR));
         }
-    }
+    }  @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("product/update/{id}")
     public ResponseEntity<ApiResponse> updateProduct(@RequestBody UpdateProductRequest request,@PathVariable Long id){
         try{
@@ -93,7 +95,7 @@ public class productController   {
         catch (ResoureeNotFoundException e){
             return ResponseEntity.status(NOT_FOUND).body(new ApiResponse(e.getMessage(),null));
         }
-    }
+    }  @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping("product/delete/{id}")
     public ResponseEntity<ApiResponse> deleteProduct(@PathVariable Long id){
         try{

@@ -11,6 +11,7 @@ public interface IUserService  {
     User createUser(CreateUserRequest request);
     User updateUser(UpdateUserRequest request,Long userId);
     void deleteUser(Long id);
+    User getAuthenticatedUser();
     UserDto getUserDtoById(Long userId); // Thêm hàm này
     UserDto convertUserToDto(User user);
 

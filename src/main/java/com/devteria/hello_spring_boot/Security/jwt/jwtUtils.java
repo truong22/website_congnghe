@@ -20,8 +20,8 @@ public class jwtUtils {
 
     @Value("${auth.token.jwtSecret}")
     private  String jwtSecret;
-    @Value("${auth.token.expirationInMils")
-    private int exporationTime;
+    @Value("${auth.token.expirationInMils}")
+    private int expirationTime;
 
     public String generateTokenForUser(Authentication authentication){
         shopUserDetails userPrincipal=(shopUserDetails)
@@ -35,7 +35,7 @@ public class jwtUtils {
                 .claim("id",userPrincipal.getId())
                 .claim("role",roles)
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(new Date().getTime()+exporationTime))
+                .setExpiration(new Date(new Date().getTime()+expirationTime))
                 .signWith(key(), SignatureAlgorithm.ES256).compact();
         }
     private Key key() {

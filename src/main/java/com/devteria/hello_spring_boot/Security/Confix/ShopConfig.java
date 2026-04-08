@@ -32,7 +32,7 @@ import java.util.List;
 public class ShopConfig {
     private  final shopUserDetailsService shopUserDetailsService;
     private final JwtAuthEntryPoint jwtAuthEntryPoint;
-    private static final List<String>SECURED_URLS=List.of("/api/v1/cats/**","/api/v1/cartItems");
+    private static final List<String>SECURED_URLS=List.of("/api/v1/carts/**","/api/v1/cartItems/**");
     @Bean
     public ModelMapper modelMapper(){
         return new ModelMapper();

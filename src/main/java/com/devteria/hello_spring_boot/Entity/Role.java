@@ -14,7 +14,7 @@ import java.util.HashSet;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "roles")
+@Table(name = "roles" )
 public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

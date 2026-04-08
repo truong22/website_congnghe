@@ -10,6 +10,9 @@ import com.devteria.hello_spring_boot.dto.UserDto;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -17,6 +20,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Service
 public class userService implements IUserService {
+    private  final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
     private final ModelMapper modelMapper;
     @Override
@@ -32,7 +36,7 @@ public class userService implements IUserService {
                     user.setFirstName(request.getFirstName());
                     user.setLastName(request.getLastName());
                     user.setEmail(request.getEmail());
-                    user.setPassWord(request.getPassWord());
+                    user.setPassWord(passwordEncoder.encode(request.getPassWord()));
                     return userRepository.save(user);
                 })
 .orElseThrow(() -> new AlreadyExistsException("Oops!" +request.getEmail() +" already exists!"));    }
@@ -53,6 +57,13 @@ public class userService implements IUserService {
                         ()->{throw new ResoureeNotFoundException("not found id");
                 });
    }
+
+    @Override
+    public User getAuthenticatedUser() {
+        Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
+        String email=authentication.getName();
+        return userRepository.findByEmail(email);
+    }
 
     @Transactional // Đảm bảo Session mở xuyên suốt hàm này
     @Override
