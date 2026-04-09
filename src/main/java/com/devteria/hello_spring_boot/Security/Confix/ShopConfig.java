@@ -1,5 +1,6 @@
 package com.devteria.hello_spring_boot.Security.Confix;
 
+import com.devteria.hello_spring_boot.Security.jwt.jwtUtils;
 import jakarta.servlet.http.HttpServlet;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -32,6 +33,7 @@ import java.util.List;
 public class ShopConfig {
     private  final shopUserDetailsService shopUserDetailsService;
     private final JwtAuthEntryPoint jwtAuthEntryPoint;
+    private final com.devteria.hello_spring_boot.Security.jwt.jwtUtils jwtUtils;
     private static final List<String>SECURED_URLS=List.of("/api/v1/carts/**","/api/v1/cartItems/**");
     @Bean
     public ModelMapper modelMapper(){
@@ -43,7 +45,7 @@ public class ShopConfig {
     }
     @Bean
     public AuthTokenFilter authTokenFilter(){
-        return  new AuthTokenFilter();
+        return  new AuthTokenFilter(jwtUtils, shopUserDetailsService);
     }
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig)throws Exception{

@@ -8,6 +8,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import org.apache.catalina.connector.Response;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -18,10 +19,11 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
+@RequiredArgsConstructor
 @Component
 public class AuthTokenFilter extends OncePerRequestFilter {
-    private  jwtUtils jwtUtils;
-    private shopUserDetailsService shopUserDetailsService;
+    private final jwtUtils jwtUtils;
+    private final shopUserDetailsService shopUserDetailsService;
 
     @Override
     protected void doFilterInternal(@NonNull HttpServletRequest request,

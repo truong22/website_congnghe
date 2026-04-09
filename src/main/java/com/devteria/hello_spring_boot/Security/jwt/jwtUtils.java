@@ -4,6 +4,7 @@ import com.devteria.hello_spring_boot.Security.User.shopUserDetails;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SignatureException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.OAuth2ResourceServerProperties;
 import org.springframework.security.core.Authentication;
@@ -15,6 +16,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
+@RequiredArgsConstructor
 @Component
 public class jwtUtils {
 
@@ -36,9 +38,9 @@ public class jwtUtils {
                 .claim("role",roles)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(new Date().getTime()+expirationTime))
-                .signWith(key(), SignatureAlgorithm.ES256).compact();
+                .signWith(key(), SignatureAlgorithm.HS256).compact();
         }
-    private Key key() {
+    public Key key() {
         return Keys.hmacShaKeyFor(Decoders.BASE64.decode(jwtSecret));
     }
 

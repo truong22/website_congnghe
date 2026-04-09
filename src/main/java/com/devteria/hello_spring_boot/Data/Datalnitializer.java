@@ -72,7 +72,7 @@ import java.util.Set;
             user.setPassWord(passwordEncoder.encode("123456")); // Lưu ý: Trong thực tế nên dùng PasswordEncoder
             user.setRoles(Set.of(adminRole));
             User savedUser = userRepository.save(user);
-            cartService.initializeNewCart(savedUser); // Gọi hàm này để tạo giỏ hàng trống cho user
+
             System.out.println("Default Admin " + i + " created successfully.");
         }
     }
